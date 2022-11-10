@@ -1,6 +1,6 @@
-class CreateSubcriptions < ActiveRecord::Migration[5.2]
+class CreateSubscriptions < ActiveRecord::Migration[5.2]
   def change
-    create_table :subcriptions do |t|
+    create_table :subscriptions do |t|
       t.string :title
       t.float :price
       t.integer :status, default: 0
