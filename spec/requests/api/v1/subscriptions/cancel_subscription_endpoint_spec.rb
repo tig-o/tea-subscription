@@ -29,4 +29,15 @@ RSpec.describe 'Cancel Subscription API' do
       expect(subscription[:attributes][:customer_id]).to eq(@tigo.id)
     end
   end
+
+  describe 'Sad Path' do
+    it 'Returns error if no status is provided' do
+      patch "/api/v1/customers/#{@tigo.id}/subscriptions/#{@tigo_sub.id}"
+
+      subscription = JSON.parse(response.body, symbolize_names: true)
+
+      expect(subscription).to have_key(:error)
+      expect(subscription[:error]).to eq("Please provide status, no status found")
+    end
+  end
 end
