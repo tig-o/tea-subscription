@@ -32,4 +32,19 @@ RSpec.describe 'Create Subscription API' do
       expect(subscription[:attributes][:customer_id]).to eq(@tigo.id)
     end
   end
+
+  describe 'Sad Path' do
+    it 'Returns an error when no tea and customer are provided' do
+      missing_sub_params = {
+        title: 'Green Tea',
+        price: 2.99,
+        frequency: 'weekly'
+      }
+
+      post "/api/v1/customers/#{@tigo.id}/subscriptions", params: missing_sub_params
+      subscription = JSON.parse(response.body, symbolize_names: true)
+
+      expect(subscription[:error]).to eq('Customer must exist and Tea must exist')
+    end
+  end
 end
